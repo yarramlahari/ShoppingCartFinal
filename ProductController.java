@@ -1,4 +1,4 @@
-package com.niit.ShoppingCart;
+ package com.niit.ShoppingCart.Controller;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -62,7 +62,10 @@ public ModelAndView display10() {
 @RequestMapping("storeproduct")
 	public String addproduct(HttpServletRequest request, @Valid @ModelAttribute("Product") Product product,BindingResult result) 
    {
-		
+	if (result.hasErrors()) {
+		System.out.println("Errors");
+		return "addproduct";
+	}
 		System.out.println(product.getId());
 		System.out.println(product.getName());
 		String filename = product.getImg().getOriginalFilename();
@@ -84,7 +87,7 @@ public ModelAndView display10() {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		pd.update(product);
+		pd.save(product);
 		return "ManageProducts";
 
 	}

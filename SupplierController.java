@@ -1,4 +1,4 @@
- package com.niit.ShoppingCart;
+ package com.niit.ShoppingCart.Controller;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class SupplierController {
 	}
 
 	
-	@RequestMapping("/Managesuppliers")
+	@RequestMapping("/ManageSuppliers")
 	public ModelAndView display6() {
 		ModelAndView m4 = new ModelAndView("ManageSuppliers");
 		return m4;
@@ -46,9 +46,9 @@ public class SupplierController {
 		String json = x.toJson(list);
 		return json;
 	}
-	@RequestMapping("/viewsuppliers")
+	@RequestMapping("/viewsupplier")
 	public ModelAndView display8() {
-		ModelAndView m4 = new ModelAndView("viewsuppliers");
+		ModelAndView m4 = new ModelAndView("viewsupplier");
 		return m4;
 	}
 	
@@ -65,8 +65,8 @@ public class SupplierController {
 		}		 		 
 	 @RequestMapping(value="editsupplier", method=RequestMethod.GET)
 	    public ModelAndView editSup(@RequestParam int id){
-		 Supplier supplier1=sd.get(id);
-	    	return new ModelAndView("editsupplier","Supplier",supplier1);
+		 Supplier supplier=sd.get(id);
+	    	return new ModelAndView("editsupplier","Supplier",supplier);
 	    }
 	 
 	 @RequestMapping(value="updatesupplier",method=RequestMethod.POST)

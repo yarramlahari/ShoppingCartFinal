@@ -1,4 +1,4 @@
-package com.niit.ShoppingCart;
+package com.niit.ShoppingCart.Controller;
 
 import java.io.IOException;
 
@@ -26,37 +26,28 @@ import com.niit.ShoppingCart.model.UserDetails;
 
 
 @Controller
+//it is used to denote the class is controller.it contains method which serve the http requests,request mappings are done at metod or class level
 public class HomeController 
 {
 	
 	@Autowired
-	UserDetailsDAO ud;
+	//to inject dependency at runtime by spring
+	UserDetailsDAO ud;//reference variable is created for UserDetailsDAO class
 	@Autowired
 	SupplierDAO sd;
 	@Autowired
 	LoginDAO ld;
 	
 	
-	@RequestMapping("/reg")
+	@RequestMapping("Register")//used to map web request url.it is applied on the specific handler methods or classes
+	
 	public ModelAndView regi()
 	{
-		ModelAndView m1=new ModelAndView("Register");
-		return m1;
+		ModelAndView m1=new ModelAndView("Register");//used to pass the respected jsp pages
+		return m1;//it returns the object
 	}
-	@RequestMapping("RegisterUS")
-	public ModelAndView regi1()
-	{
-		ModelAndView m1=new ModelAndView("RegisterUS");
-		return m1;
-	}
-	@RequestMapping("Home")
-	public ModelAndView home1()
-	{
-		ModelAndView m1=new ModelAndView("Home");
-		return m1;
-		
-	}
-	@RequestMapping("/")
+
+	@RequestMapping(value={"/","/Home"})
 	public ModelAndView home()
 	{
 		ModelAndView m1=new ModelAndView("Home");
@@ -69,12 +60,6 @@ public class HomeController
 		ModelAndView mv6=new ModelAndView("Contactus");
 		return mv6;
 	}
-		@RequestMapping("/UserHome")
-		public ModelAndView UserHome()
-		{
-			ModelAndView mv6=new ModelAndView("UserHome");
-			return mv6;
-		}
 	
 	@RequestMapping("Login")
 	public ModelAndView Login()
@@ -82,12 +67,12 @@ public class HomeController
 		ModelAndView m1=new ModelAndView("Login");
 		return m1;
 	}
-	@RequestMapping("LoginUS")
-	public ModelAndView Login1()
-	{
-		ModelAndView m1=new ModelAndView("LoginUS");
-		return m1;
-	}
+	
+	 @ModelAttribute("Login")//to provide reference  data for the model
+	    public Login createuser(){
+	    	return new Login();
+	    }
+
 	@RequestMapping("/addsupplier")
 	public ModelAndView display3() {
 
@@ -98,9 +83,10 @@ public class HomeController
 	public String addsupplier(HttpServletRequest request, @Valid @ModelAttribute("Supplier") Supplier supplier,
 			BindingResult result) {
 		if (result.hasErrors()) {
+			//form validation error
 			return "addsupplier";
 		}
-		sd.save(supplier);
+		sd.save(supplier);//save means it save the object of Supplier
 		return "addsupplier";
 
 	}
@@ -118,28 +104,31 @@ public class HomeController
 	}
 	
 	@RequestMapping(value = "storeUser", method = RequestMethod.POST)
+	//value="path"
 	public String addUser(@Valid @ModelAttribute("UserDetails") UserDetails registeruser,BindingResult result) {
+		//@valid means is common to validate a model after binding a user input to it
+		//binding result is used to holds the result  of the validation and binding and contains errors that may have occurred
 		if (result.hasErrors()) {
+			 // Register failed so return to the Register form with errors
 			System.out.println("Errors");
 			return "Register";
 		}
-		System.out.println(registeruser.getUsername());
+		System.out.println(registeruser.getUsername());//if no errors then user details will be saved
 		ud.save(registeruser);
-		Login loginuser = new Login();
-		loginuser.setId(registeruser.getId());
+		Login loginuser = new Login();//login object is created
+		loginuser.setId(registeruser.getId());//values are set and retrieved
 		loginuser.setUsername(registeruser.getUsername());
 		loginuser.setPassword(registeruser.getPassword());
 		loginuser.setStatus(registeruser.isStatus());
 		ld.save(loginuser);
-		return "Register";
+		System.out.println("REGISTRATION FINISHED SUCCESSFULLY");
+		return "Home";
 	}
-    @ModelAttribute("Login")
-    public Login createuser(){
-    	return new Login();
-    }
+	
     
     @RequestMapping("/checkuser")
     public ModelAndView checkedUser(@Valid @ModelAttribute("Login")Login user,BindingResult result,@RequestParam("userName") String userName,@RequestParam("password")String password) 
+    //@RequestParam is used to specifies the particular parameter 
     { 
     	System.out.println("UserName is............."+userName);
     	System.out.println("Password is............."+password);
@@ -161,8 +150,11 @@ public class HomeController
 	@RequestMapping(value = "/Logout", method = RequestMethod.GET)
 	public void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session)
 			throws ServletException, IOException {
+		// doGet() and doPost() methods throw javax.servlet.ServletException and IOException, 
 		HttpSession newsession = request.getSession(false);
+		//session is used to create the objects
 		if (newsession != null) 
+			 // Not created yet.
 	    {
 	         newsession.invalidate();
 

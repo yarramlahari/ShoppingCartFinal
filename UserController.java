@@ -1,5 +1,5 @@
 
-package com.niit.ShoppingCart;
+package com.niit.ShoppingCart.Controller;
 
 import java.util.List;
 
