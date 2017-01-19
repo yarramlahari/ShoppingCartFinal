@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS Organization (id int auto_increment , name varchar(255), country int, address varchar(255), phone varchar(255), market_cap bigint, primary key(id), foreign key (country) references public.country(country_id));
+CREATE TABLE IF NOT EXISTS Country (country_id int auto_increment , name varchar(255), isocode varchar(255), primary key(country_id));
+INSERT INTO Country (name, isocode) VALUES('Poland', '616');
+INSERT INTO Country (name, isocode) VALUES('Ukraine', '804');
+INSERT INTO Country (name, isocode) VALUES('Singapore', '702');
+INSERT INTO Country (name, isocode) VALUES('Mexico', '484');
+INSERT INTO Country (name, isocode) VALUES('USA', '840');
+INSERT INTO Country (name, isocode) VALUES('Switzerland', '756');
+INSERT INTO Country (name, isocode) VALUES('Norway', '578');
+INSERT INTO Country (name, isocode) VALUES('Spain', '724');
+INSERT INTO Country (name, isocode) VALUES('Germany', '276');
+INSERT INTO Country (name, isocode) VALUES('Italy', '380');
+INSERT INTO Country (name, isocode) VALUES('France', '250');
+INSERT INTO Country (name, isocode) VALUES('UK', '826');
+INSERT INTO Organization (name, country, address, phone, market_cap) VALUES('Ramesh', '1', 'Hyderabad, India', '124458800', '1132929388');
+INSERT INTO Organization (name, country, address, phone, market_cap) VALUES('Suresh', '1', 'Bangalore, India', '123966111', '3368970189');
+INSERT INTO Organization (name, country, address, phone, market_cap) VALUES('Google', '1', 'California, USA', '126815300', '419234595030');
